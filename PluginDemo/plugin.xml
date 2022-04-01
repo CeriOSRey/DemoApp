@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.ceriosly.plugindemo" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"><name>PluginDemo</name><js-module name="PluginDemo" src="www/PluginDemo.js"><clobbers target="cordova.plugins.PluginDemo" /></js-module><platform name="ios"><config-file parent="/*" target="config.xml"><feature name="PluginDemo"><param name="ios-package" value="PluginDemo" /></feature></config-file><source-file src="src/ios/PluginDemo.m" /></platform></plugin>

@@ -1,0 +1,17 @@
+{
+  "name": "com.ceriosly.plugindemo",
+  "version": "1.0.0",
+  "description": "demo plugin",
+  "cordova": {
+    "id": "com.ceriosly.plugindemo",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios"
+  ],
+  "author": "",
+  "license": "ISC"
+}

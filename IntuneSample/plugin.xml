@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.ceriosly.intunesample" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>IntuneSample</name>
+    <js-module name="IntuneSample" src="www/IntuneSample.js">
+        <clobbers target="cordova.plugins.IntuneSample" />
+    </js-module>
+</plugin>
