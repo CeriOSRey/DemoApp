@@ -108,3 +108,11 @@ h1 {
         background-image:linear-gradient(to bottom, #585858 0%, #1B1B1B 51%);
     }
 }
+
+.authButton {
+    margin-top: 50px;
+    width: 100px;
+    height: 45px;
+    font-size: large;
+    font-weight: bold;
+}
