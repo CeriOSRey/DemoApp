@@ -14,14 +14,20 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "com.ceriosly.plugindemo": "file:PluginDemo",
-    "cordova-ios": "^6.2.0"
+    "cordova-ios": "^6.2.0",
+    "cordova-plugin-msal": "^2.5.0"
   },
   "cordova": {
     "platforms": [
       "ios"
     ],
     "plugins": {
-      "com.ceriosly.plugindemo": {}
+      "com.ceriosly.plugindemo": {},
+      "cordova-plugin-msal": {
+        "CLIENT_ID": "ef9d2d49-db14-4253-b507-97ffe76e2c67",
+        "TENANT_ID": "common",
+        "KEY_HASH": "not-provided"
+      }
     }
   }
 }
