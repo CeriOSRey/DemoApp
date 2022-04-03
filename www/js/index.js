@@ -24,6 +24,8 @@ function onDeviceReady() {
 }
 
 var authButton = document.getElementById('authButton');
+var textContainer = document.getElementById('textAreaContainer');
+textContainer.style.visibility = "hidden";
 authButton.onclick = function() {
     if (authButton.innerHTML == "Login") {
         checkIfPluginLoadedProperly()
@@ -50,6 +52,7 @@ function signInSilent() {
             // resp is an object containing information about the signed in user, see below.
             alert(resp.token);
             authButton.innerHTML = "Logout"
+            textContainer.style.visibility = "visible"
             return;
         }, 
         function(err) {
@@ -66,6 +69,7 @@ function signInInteractive() {
         // resp is an object containing information about the signed in user, see below.
         alert(resp.token);
         authButton.innerHTML = "Logout";
+        textContainer.style.visibility = "visible"
         return;
     }, 
     function(err) {
@@ -73,6 +77,7 @@ function signInInteractive() {
         // signin process and closed the popup window. Handle this however
         // you want, depending again if you want guest access or not.
         alert(err);
+        return;
     });
 }
 
@@ -82,12 +87,15 @@ function signOut() {
         // account is an object containing information about the signed in user, see below.
         alert('msg');
         authButton.innerHTML = "Login";
+        textContainer.style.visibility = "hidden"
+
     }, 
     function(err) {
         // An error here usually either means you accidentally tried to
         // sign out someone who wasn't signed in, or there was a problem
         // communicating with the server.
         alert(err);
+        return;
     }
 );
 }
