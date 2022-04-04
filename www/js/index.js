@@ -22,6 +22,22 @@ function onDeviceReady() {
     // }, 5000);
     
 }
+var userData = {
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+        "businessPhones": [
+            "+12345678910"
+        ],
+        "displayName": "Robins, Walter",
+        "givenName": "Walter",
+        "jobTitle": "Developer",
+        "mail": null,
+        "mobilePhone": null,
+        "officeLocation": null,
+        "preferredLanguage": null,
+        "surname": "Robins",
+        "userPrincipalName": "wrobins@myemailaddr.com",
+        "id": "myaccount-guid-1234"
+}
 
 var authButton = document.getElementById('authButton');
 var textContainer = document.getElementById('textAreaContainer');
@@ -35,41 +51,56 @@ authButton.onclick = function() {
 };
 
 function checkIfPluginLoadedProperly(result) {
-        // check if plugin loaded properly
-        let isAvailable = typeof(cordova.plugins.msalPlugin) !== "undefined";
+    // check if plugin loaded properly
+    let isAvailable = typeof(cordova.plugins.msalPlugin) !== "undefined";
 
-        window.cordova.plugins.msalPlugin.msalInit(function() {
-            signInSilent();
-        },
-        function (err) {
-            console.log(err);
-        });
-    }
+    window.cordova.plugins.msalPlugin.msalInit(function() {
+        signInSilent();
+    },
+    function (err) {
+        console.log(err);
+    });
+}
 
 function signInSilent() {
-        window.cordova.plugins.msalPlugin.signInSilent(
-        function(resp) {
-            // resp is an object containing information about the signed in user, see below.
-            alert(resp.token);
-            authButton.innerHTML = "Logout"
-            textContainer.style.visibility = "visible"
-            return;
-        }, 
-        function(err) {
-            // err probably says "No accounts found" but maybe other debugging info
-            // Don't show this to the user; just use it for debugging.
-            // Here's where you either call the next prompt or wait for the user
-            signInInteractive();
-        });
+    window.cordova.plugins.msalPlugin.signInSilent(
+    function(resp) {
+        // resp is an object containing information about the signed in user, see below.
+        console.log(resp)
+        var email = "";
+        (async() => {
+             email = await fetchUserData(resp);
+        })();
+        authButton.innerHTML = "Logout"
+        textContainer.style.visibility = "visible"
+        textContainer.innerHTML = email;
+
+        alert(resp)
+        return;
+    }, 
+    function(err) {
+        // err probably says "No accounts found" but maybe other debugging info
+        // Don't show this to the user; just use it for debugging.
+        // Here's where you either call the next prompt or wait for the user
+        signInInteractive();
+    });
 }
 
 function signInInteractive() {
     window.cordova.plugins.msalPlugin.signInInteractive(
     function(resp) {
+        console.log(resp)
+
         // resp is an object containing information about the signed in user, see below.
-        alert(resp.token);
+        var email = "";
+        (async() => {
+            let email = await fetchUserData(resp);
+        })();
         authButton.innerHTML = "Logout";
         textContainer.style.visibility = "visible"
+        alert(resp)
+        textContainer.innerHTML = email;
+
         return;
     }, 
     function(err) {
@@ -85,7 +116,7 @@ function signOut() {
     window.cordova.plugins.msalPlugin.signOut(
     function(msg) {
         // account is an object containing information about the signed in user, see below.
-        alert('msg');
+        alert('User is signed out');
         authButton.innerHTML = "Login";
         textContainer.style.visibility = "hidden"
 
@@ -96,6 +127,17 @@ function signOut() {
         // communicating with the server.
         alert(err);
         return;
-    }
-);
+    });
+}
+
+async function fetchUserData(token) {
+      const response = await fetch("https://graph.microsoft.com/v1.0/me", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token.toString()
+            }
+      });       
+      const obj = await response.json()     
+      return obj;
 }
